@@ -199,6 +199,7 @@ def load_tovisit_URLS():
     
 def getResult(n_pages=10):
     #initializeDB()
+    #asd
     
     urls_tovisit = load_tovisit_URLS()
     
