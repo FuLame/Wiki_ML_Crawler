@@ -197,11 +197,29 @@ def load_tovisit_URLS():
             return start_urls
 #start_url = link("https://en.wikipedia.org/wiki/Pedro_Domingos")
     
+def load_visited_URLS():
+    start_urls = list()
+    try:    
+        conn = sqlite3.connect('wikiDump.sqlite')
+        cur = conn.cursor()
+        command = '''SELECT links FROM links_visited'''
+        cur.execute(command)
+        result = cur.fetchall()
+        for item in result:
+            start_urls.append(link(item[0]))
+        
+    except:   
+        return start_urls
+    finally:
+        conn.close()
+        return start_urls
+
 def getResult(n_pages=10):
     #initializeDB()
     #asd
     
     urls_tovisit = load_tovisit_URLS()
+    urls_visited = load_visited_URLS()
     
     start_url = urls_tovisit[0]
     print start_url
@@ -210,7 +228,6 @@ def getResult(n_pages=10):
     
     start_url.set_title(soup.title.string)
     #urls_tovisit = [start_url]
-    urls_visited = list()
     
     #while len(urls_tovisit) != 0:
     t0 = time.time()
